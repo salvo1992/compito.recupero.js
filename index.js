@@ -123,7 +123,7 @@ const tasks = [
 
 // Funzione per creare gli elementi HTML
 function createTaskElement(task) {
-    const taskElement = document.createElement('div');
+    const taskElement = document.querySelector('div');
     taskElement.innerText = task.todo;
 
     if (task.completed) {
@@ -139,7 +139,10 @@ function createTaskElement(task) {
 const taskContainer = document.querySelector('#task-container'); 
 
 // Genera l'HTML per gli elementi dei compiti e aggiungilo direttamente al contenuto HTML del container
-const tasksHTML = tasks.map(task => createTaskElement(task)).join('');
+let tasksHTML = '';
+for (const task of tasks) {
+  tasksHTML += createTaskElement(task);
+}
 taskContainer.innerHTML = tasksHTML;
 
 
@@ -149,8 +152,13 @@ taskContainer.innerHTML = tasksHTML;
 const incompleteTasks = tasks.filter(task => !task.completed);
 
 // Genera l'HTML per gli elementi dei compiti non completati e aggiungilo direttamente al contenuto HTML del container
-const incompleteTasksHTML = incompleteTasks.map(task => createTaskElement(task)).join('');
+let incompleteTasksHTML = '';
+for (let i = 0; i < incompleteTasks.length; i++) {
+  incompleteTasksHTML += createTaskElement(incompleteTasks[i]);
+}
 taskContainer.innerHTML = incompleteTasksHTML;
+
+
 
 
 // Funzione per filtrare le task 
@@ -164,10 +172,17 @@ function filterTasks() {
 
 // Funzione per visualizzare le task filtrate
 function displayTasks(filteredTasks) {
-    // Crea una stringa HTML per ciascuna task filtrata e unisce tutto in un'unica stringa
-    document.querySelector('#taskList').innerHTML = filteredTasks.map(task =>
-        `<li style="color: ${task.completed ? 'green' : 'red'};">${task.todo}</li>`
-    ).join('');
+    let htmlString = ''; // Stringa HTML vuota iniziale
+
+    // Itera attraverso le attività filtrate e costruisci la stringa HTML manualmente
+    for (let i = 0; i < filteredTasks.length; i++) {
+        const task = filteredTasks[i];
+        const color = task.completed ? 'green' : 'red';
+        htmlString += `<li style="color: ${color};">${task.todo}</li>`;
+    }
+
+    // Imposta la stringa HTML generata come contenuto dell'elemento con ID 'taskList'
+    document.querySelector('#taskList').innerHTML = htmlString;
 }
 
 // Mostra inizialmente tutte le task non filtrate
