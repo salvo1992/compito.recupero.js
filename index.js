@@ -185,8 +185,7 @@ function displayTasks(filteredTasks) {
     document.querySelector('#taskList').innerHTML = htmlString;
 }
 
-// Mostra inizialmente tutte le task non filtrate
-displayTasks(tasks);
+
 
 
 
